@@ -245,16 +245,11 @@ var ShowView = Backbone.View.extend({
 	},
 	initialize: function() {
 		this.listenTo(debts, "reset", this.renderCollection);
-		this.listenTo(debts, "add", this.renderModel);
+		this.listenTo(debts, "add", this.renderCollection);
 
 		debts.fetch({reset: true});
 	},
-	renderModel: function(d){
-		console.log(d);
-		var view = new DebtView({model: d});
-		
-		$('#showViewList').prepend(view.render().el);
-	},
+
 	renderCollection: function(){
 		if (debts.length === 0) return;
 
