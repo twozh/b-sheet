@@ -197,7 +197,7 @@ var DebtView = Backbone.View.extend({
 	},
 	render: function(){
 		var debt = this.model.toJSON();
-		debt.createTime = this.dateFormat(debt.createTime);
+		//debt.createTime = this.dateFormat(debt.createTime);
 		this.$el.html(this.template(debt));
 		return this;
 	},
@@ -246,12 +246,15 @@ var ShowView = Backbone.View.extend({
 	initialize: function() {
 		this.listenTo(debts, "reset", this.renderCollection);
 		this.listenTo(debts, "add", this.renderCollection);
+		this.listenTo(debts, "remove", this.renderCollection);
 
 		debts.fetch({reset: true});
 	},
 
 	renderCollection: function(){
 		if (debts.length === 0) return;
+
+		var total = 0;
 
 		var t = $("<p></p>");
 		var tPaided = $("<p></p>");
@@ -273,10 +276,13 @@ var ShowView = Backbone.View.extend({
 				if (!d.get('stageLeft')) return;
 				t.append(view.render().el);	
 			}
+
+			total += d.get('payMoney');
 		});
 
 		$('#showViewList').append(t.children());
 		$('#showViewPaidedList').append(tPaided.children());
+		$('#showViewTotal').html(total);
 	},
 });
 
