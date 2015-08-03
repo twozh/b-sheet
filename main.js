@@ -55,7 +55,7 @@ var Debts = Backbone.Collection.extend({
 	model: Debt,
 	localStorage: new Backbone.LocalStorage("Debt"),
 	comparator: function(m){
-		return m.get('firstStageDate').substr(5);
+		return m.get('firstStageDate').substr(8);
 	},
 });
 
